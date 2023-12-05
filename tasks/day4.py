@@ -25,19 +25,16 @@ def cards():
 
     pprint.pprint(cards, depth=3)
     score = sum(cards)
-    counter = 0
-    # go through cards
+    # winning cards itself
+    counter = [1] * len(wins)
     print(wins)
+    # go through cards
     for idx, card in enumerate(wins):
-        print(f"Index {idx+1} and wins", card)
-        # determine amount and indexes of copies?
-        # card itself and how many it wins
-        if card  > 0:
-            counter += card + 1 
-            # win of each copy
-            for i in range(idx+1, idx+card+1):
-                print(f"Won {wins[i]} from card", i+1)
-                if wins[i]:
-                    counter += wins[i]+1
-                print("Get cards ", counter)
-    return score, counter
+        print(f"Index {idx} and wins", card)
+        # win of each copy
+        for i in range(idx+1, idx+card+1):
+            print(f"Won {wins[i]} from card", i)            
+            # accumulate!
+            counter[i] += counter[idx]
+            print("Upd cards ", counter[i])
+    return score, sum(counter)
